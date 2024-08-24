@@ -1,0 +1,142 @@
+dns:
+  enabled: true
+  fallback:
+    - 8.8.8.8
+    - 8.8.4.4
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
+  nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+log-level: silent
+port: 7890
+#proxies:
+#  - alpn:
+#      - h3
+#    insecure: '0'
+#    name: www.luckycurve.xyz
+#    password: 5aeff115-e18d-42de-b35b-7ae26999ec8e
+#    peer: www.luckycurve.xyz
+#    port: 22933
+#    server: www.luckycurve.xyz
+#    sni: www.luckycurve.xyz
+#    type: hysteria2
+#  - alpn:
+#      - h3
+#    insecure: '0'
+#    name: www.luckycurve.space
+#    password: ae72ef5f-8ddf-450d-8657-f8a58f08dcc9
+#    peer: www.luckycurve.space
+#    port: 31285
+#    server: www.luckycurve.space
+#    sni: www.luckycurve.space
+#    type: hysteria2
+proxy-groups:
+  - name: "\U0001F48D PROXY"
+    proxies:
+      - DIRECT
+      - www.luckycurve.xyz
+      - www.luckycurve.space
+    type: select
+  - name: "\U0001F3AF DEFAULT"
+    proxies:
+      - DIRECT
+      - www.luckycurve.xyz
+      - www.luckycurve.space
+    type: select
+rule-providers:
+  apple:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/apple.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt
+  applications:
+    behavior: classical
+    interval: 86400
+    path: ./ruleset/applications.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt
+  cncidr:
+    behavior: ipcidr
+    interval: 86400
+    path: ./ruleset/cncidr.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt
+  direct:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/direct.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt
+  gfw:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/gfw.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt
+  google:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/google.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt
+  icloud:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/icloud.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt
+  lancidr:
+    behavior: ipcidr
+    interval: 86400
+    path: ./ruleset/lancidr.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt
+  private:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/private.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt
+  proxy:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/proxy.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
+  reject:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/reject.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
+  telegramcidr:
+    behavior: ipcidr
+    interval: 86400
+    path: ./ruleset/telegramcidr.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt
+  tld-not-cn:
+    behavior: domain
+    interval: 86400
+    path: ./ruleset/tld-not-cn.yaml
+    type: http
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt
+rules:
+  - RULE-SET,applications,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - RULE-SET,private,DIRECT
+  - RULE-SET,reject,REJECT
+  - RULE-SET,icloud,DIRECT
+  - RULE-SET,apple,DIRECT
+  - "RULE-SET,google,\U0001F48D PROXY"
+  - "RULE-SET,proxy,\U0001F48D PROXY"
+  - RULE-SET,direct,DIRECT
+  - RULE-SET,lancidr,DIRECT
+  - RULE-SET,cncidr,DIRECT
+  - "RULE-SET,telegramcidr,\U0001F48D PROXY"
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - "MATCH,\U0001F3AF DEFAULT"

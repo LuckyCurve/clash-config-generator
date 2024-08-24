@@ -27,7 +27,9 @@ class ProxyControllerTest {
 
     @Test
     void generateClashConfig() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/proxy/generate/clash").param("subscribeUrls", "url"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/proxy/generate/clash")
+                        .param("subscribeUrls", "hysteria2://ae72ef5f-8ddf-450d-8657-f8a58f08dcc9@www.luckycurve.space:31285?peer=www.luckycurve.space&insecure=0&sni=www.luckycurve.space&alpn=h3#ae72ef5f-singbox_hysteria2")
+                )
                 .andExpectAll(MockMvcResultMatchers.status().isOk()).andReturn();
 
         System.out.println(result.getResponse().getContentAsString());
