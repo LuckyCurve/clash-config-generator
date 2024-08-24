@@ -29,7 +29,7 @@ public class ProxyController {
     @Value("classpath:baseProxy.yaml")
     org.springframework.core.io.Resource baseResource;
 
-    Yaml yaml = new Yaml();
+    private final Yaml yaml = new Yaml();
 
     @GetMapping(value = "/generate/clash", produces = "application/yaml")
     public String generateClashConfig(@RequestParam("subscribeUrls") List<String> subscribeUrls) throws IOException {

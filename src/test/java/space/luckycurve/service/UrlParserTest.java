@@ -3,8 +3,6 @@ package space.luckycurve.service;
 import org.junit.jupiter.api.Test;
 import space.luckycurve.dto.url.Url;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UrlParserTest {
 
     @Test

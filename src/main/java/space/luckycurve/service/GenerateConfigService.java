@@ -17,7 +17,7 @@ import java.util.Set;
 @Service
 public class GenerateConfigService {
 
-    private Map<String, BaseProxy> baseProxyMap = new HashMap<>();
+    private final Map<String, BaseProxy> baseProxyMap = new HashMap<>();
 
     {
         Set<Class<? extends BaseProxy>> subClass = ClashConfigGeneratorApplication.getRootReflections().getSubTypesOf(BaseProxy.class);
