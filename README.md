@@ -12,6 +12,3 @@ a clash config file generator
 ## Usage
 
 Run gradle build and execute, application start up on 8080 port default.
-
-
-
