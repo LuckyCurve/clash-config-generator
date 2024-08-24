@@ -67,10 +67,34 @@ class ProxyControllerTest {
     @Test
     void generateClashTUIC5Config() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/proxy/generate/clash")
-                        .param("subscribeUrls", "tuic://www.luckycurve.space:34192?uuid=3852f37f-3402-4a61-ad70-aad77e28a7f7&password=3852f37f-3402-4a61-ad70-aad77e28a7f7&congestion-controller=bbr")
+                        .param("subscribeUrls", "tuic://www.luckycurve.space:34192?uuid=3852f37f-3402-4a61-ad70-aad77e28a7f7&password=3852f37f-3402-4a61-ad70-aad77e28a7f7&congestion-controller=bbr&alpn=h3")
                 )
                 .andExpectAll(MockMvcResultMatchers.status().isOk()).andReturn();
 
-        System.out.println(result.getResponse().getContentAsString());
+        String response = result.getResponse().getContentAsString();
+        System.out.println(response);
+        Map<String, ?> res = yaml.load(response);
+
+        Map<?, ?> proxy = (Map<?, ?>) ((List<?>) res.get("proxies")).getFirst();
+        assertEquals(proxy.get("type"), "tuic");
+        assertEquals(proxy.get("name"), "www.luckycurve.space:34192:tuic");
+        assertEquals(proxy.get("server"), "www.luckycurve.space");
+        assertEquals(proxy.get("port"), 34192);
+        assertEquals(proxy.get("uuid"), "3852f37f-3402-4a61-ad70-aad77e28a7f7");
+        assertEquals(proxy.get("password"), "3852f37f-3402-4a61-ad70-aad77e28a7f7");
+        assertEquals(proxy.get("alpn"), Lists.newArrayList("h3"));
+        assertEquals(proxy.get("congestion-controller"), "bbr");
+
+        List<?> proxyGroups = (List<?>) res.get("proxy-groups");
+
+        Map<?, ?> proxyGroup = (Map<?, ?>) proxyGroups.getFirst();
+        assertEquals(proxyGroup.get("name"), "\uD83D\uDC8D PROXY");
+        assertEquals(proxyGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "DIRECT"));
+        assertEquals(proxyGroup.get("type"), "select");
+
+        Map<?, ?> defaultGroup = (Map<?, ?>) proxyGroups.get(1);
+        assertEquals(defaultGroup.get("name"), "\uD83C\uDFAF DEFAULT");
+        assertEquals(defaultGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "DIRECT"));
+        assertEquals(defaultGroup.get("type"), "select");
     }
 }
