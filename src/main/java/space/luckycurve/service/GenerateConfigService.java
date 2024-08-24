@@ -25,7 +25,7 @@ public class GenerateConfigService {
             try {
                 Constructor<? extends BaseProxy> constructor = clazz.getConstructor();
                 BaseProxy baseProxy = constructor.newInstance();
-                baseProxyMap.put(baseProxy.getType(), baseProxy);
+                baseProxyMap.put(baseProxy.proxyType(), baseProxy);
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                      InvocationTargetException e) {
                 throw new RuntimeException(e);

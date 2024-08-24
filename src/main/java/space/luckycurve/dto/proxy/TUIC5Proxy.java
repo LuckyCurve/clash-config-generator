@@ -1,5 +1,6 @@
 package space.luckycurve.dto.proxy;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,18 +15,23 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class Hysteria2Proxy extends BaseProxy {
+public class TUIC5Proxy extends BaseProxy {
+
+    private String uuid;
 
     private String password;
 
-    private String sni;
+    @JsonProperty(value = "congestion-controller")
+    private String congestionController;
 
     private List<String> alpn;
 
+    @Override
     public BaseProxy transferByUrl(Url url) {
-        return new Hysteria2Proxy()
-                .setPassword(url.getUserInfo())
-                .setSni(url.getQuery().getFirst("sni"))
+        return new TUIC5Proxy()
+                .setUuid(url.getQuery().getFirst("uuid"))
+                .setPassword(url.getQuery().getFirst("password"))
+                .setCongestionController(url.getQuery().getFirst("congestion-controller"))
                 .setAlpn(url.getQuery().get("alpn"))
                 .setServer(url.getHost())
                 .setPort(url.getPort())
@@ -34,6 +40,6 @@ public class Hysteria2Proxy extends BaseProxy {
 
     @Override
     public String proxyType() {
-        return "hysteria2";
+        return "tuic";
     }
 }
