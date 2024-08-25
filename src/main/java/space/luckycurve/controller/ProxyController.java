@@ -26,7 +26,7 @@ public class ProxyController {
     @Resource
     GenerateConfigService generateConfigService;
 
-    @Value("classpath:baseProxy.yaml")
+    @Value("classpath:templates/baseProxy.yaml")
     org.springframework.core.io.Resource baseResource;
 
     private final Yaml yaml = new Yaml();

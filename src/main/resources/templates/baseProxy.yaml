@@ -10,40 +10,6 @@ dns:
     - 223.5.5.5
 log-level: silent
 port: 7890
-#proxies:
-#  - alpn:
-#      - h3
-#    insecure: '0'
-#    name: www.luckycurve.xyz
-#    password: 5aeff115-e18d-42de-b35b-7ae26999ec8e
-#    peer: www.luckycurve.xyz
-#    port: 22933
-#    server: www.luckycurve.xyz
-#    sni: www.luckycurve.xyz
-#    type: hysteria2
-#  - alpn:
-#      - h3
-#    insecure: '0'
-#    name: www.luckycurve.space
-#    password: ae72ef5f-8ddf-450d-8657-f8a58f08dcc9
-#    peer: www.luckycurve.space
-#    port: 31285
-#    server: www.luckycurve.space
-#    sni: www.luckycurve.space
-#    type: hysteria2
-proxy-groups:
-  - name: "\U0001F48D PROXY"
-    proxies:
-      - DIRECT
-      - www.luckycurve.xyz
-      - www.luckycurve.space
-    type: select
-  - name: "\U0001F3AF DEFAULT"
-    proxies:
-      - DIRECT
-      - www.luckycurve.xyz
-      - www.luckycurve.space
-    type: select
 rule-providers:
   apple:
     behavior: domain
@@ -139,4 +105,4 @@ rules:
   - "RULE-SET,telegramcidr,\U0001F48D PROXY"
   - GEOIP,LAN,DIRECT
   - GEOIP,CN,DIRECT
-  - "MATCH,\U0001F3AF DEFAULT"
+  - "MATCH,🎯 DEFAULT"
