@@ -55,12 +55,20 @@ class ProxyControllerTest {
 
         Map<?, ?> proxyGroup = (Map<?, ?>) proxyGroups.getFirst();
         assertEquals(proxyGroup.get("name"), "\uD83D\uDC8D PROXY");
-        assertEquals(proxyGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:31285:hysteria2", "DIRECT"));
+        assertEquals(proxyGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:31285:hysteria2", "\uD83C\uDF40 AUTO_SELECT", "DIRECT"));
         assertEquals(proxyGroup.get("type"), "select");
 
-        Map<?, ?> defaultGroup = (Map<?, ?>) proxyGroups.get(1);
+        Map<?, ?> autoGroup = (Map<?, ?>) proxyGroups.get(1);
+        assertEquals(autoGroup.get("name"), "\uD83C\uDF40 AUTO_SELECT");
+        assertEquals(autoGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:31285:hysteria2"));
+        assertEquals(autoGroup.get("type"), "url-test");
+        assertEquals(autoGroup.get("interval"), 300);
+        assertEquals(autoGroup.get("tolerance"), 50);
+        assertEquals(autoGroup.get("url"),"http://www.gstatic.com/generate_204");
+
+        Map<?, ?> defaultGroup = (Map<?, ?>) proxyGroups.get(2);
         assertEquals(defaultGroup.get("name"), "\uD83C\uDFAF DEFAULT");
-        assertEquals(defaultGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:31285:hysteria2", "DIRECT"));
+        assertEquals(defaultGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:31285:hysteria2", "\uD83C\uDF40 AUTO_SELECT", "DIRECT"));
         assertEquals(defaultGroup.get("type"), "select");
     }
 
@@ -89,12 +97,20 @@ class ProxyControllerTest {
 
         Map<?, ?> proxyGroup = (Map<?, ?>) proxyGroups.getFirst();
         assertEquals(proxyGroup.get("name"), "\uD83D\uDC8D PROXY");
-        assertEquals(proxyGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "DIRECT"));
+        assertEquals(proxyGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "\uD83C\uDF40 AUTO_SELECT", "DIRECT"));
         assertEquals(proxyGroup.get("type"), "select");
 
-        Map<?, ?> defaultGroup = (Map<?, ?>) proxyGroups.get(1);
+        Map<?, ?> autoGroup = (Map<?, ?>) proxyGroups.get(1);
+        assertEquals(autoGroup.get("name"), "\uD83C\uDF40 AUTO_SELECT");
+        assertEquals(autoGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic"));
+        assertEquals(autoGroup.get("type"), "url-test");
+        assertEquals(autoGroup.get("interval"), 300);
+        assertEquals(autoGroup.get("tolerance"), 50);
+        assertEquals(autoGroup.get("url"),"http://www.gstatic.com/generate_204");
+
+        Map<?, ?> defaultGroup = (Map<?, ?>) proxyGroups.get(2);
         assertEquals(defaultGroup.get("name"), "\uD83C\uDFAF DEFAULT");
-        assertEquals(defaultGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "DIRECT"));
+        assertEquals(defaultGroup.get("proxies"), Lists.newArrayList("www.luckycurve.space:34192:tuic", "\uD83C\uDF40 AUTO_SELECT", "DIRECT"));
         assertEquals(defaultGroup.get("type"), "select");
     }
 }

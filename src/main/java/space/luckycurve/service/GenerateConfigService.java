@@ -1,11 +1,11 @@
 package space.luckycurve.service;
 
-import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import space.luckycurve.ClashConfigGeneratorApplication;
 import space.luckycurve.dto.proxy.BaseProxy;
 import space.luckycurve.dto.proxy.group.ProxyGroup;
 import space.luckycurve.dto.url.Url;
+import space.luckycurve.utils.Lists;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -40,10 +40,12 @@ public class GenerateConfigService {
     }
 
     public List<ProxyGroup> generateProxyGroup(List<String> proxyNames) {
-        proxyNames.add("DIRECT");
+        String auto = "\uD83C\uDF40 AUTO_SELECT";
+        String direct = "DIRECT";
 
-        return Lists.newArrayList(
-                new ProxyGroup("\uD83D\uDC8D PROXY", proxyNames, "select"),
-                new ProxyGroup("\uD83C\uDFAF DEFAULT", proxyNames, "select"));
+        return com.google.common.collect.Lists.newArrayList(
+                new ProxyGroup("\uD83D\uDC8D PROXY", Lists.clone(proxyNames, auto, direct), "select"),
+                new ProxyGroup("\uD83C\uDF40 AUTO_SELECT", proxyNames, "url-test", 300, 50, "http://www.gstatic.com/generate_204"),
+                new ProxyGroup("\uD83C\uDFAF DEFAULT", Lists.clone(proxyNames, auto, direct), "select"));
     }
 }
